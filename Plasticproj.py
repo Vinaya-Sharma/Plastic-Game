@@ -1,7 +1,16 @@
 import pygame 
 import os
 import random
+import time 
+
+b = "not excited"
+while b!="excited":
+    b = input("Hey are you ready to play plastic pollution clean up? \nTry to collect all the plastic water bottles before 15 secounds are up.\nGood luck and type EXCITED to begin!").lower()
+
 pygame.init()
+
+endtime = 0 
+startime = 0 
 
 WIDTH, HEIGHT = 500, 500
 WHITE = (255,50,0)
@@ -54,8 +63,10 @@ def tcheck(bco, character):
         
         if cco[0] > co[0]-20 and cco[0] < co[0]+20 and cco[1] > co[1]-20 and cco[1] < co[1]+20:
             bco.remove(co)
-               
+
+startime = time.time()            
 def main():
+    
     
     character = pygame.Rect(0, 100, PLAYERW, PLAYERH)
     clock = pygame.time.Clock()
@@ -72,6 +83,8 @@ def main():
         
         draw_window(character)
         if len(bco)==0:
+            endtime = time.time()
+            e = endtime
             run = False
             for i in range(3):print()
             print("Congratulations! You were able to collect a ton of plastic waste in your local area")
@@ -79,6 +92,11 @@ def main():
             print("Try eliminating the use of disposable plastics, Stop buying bottled water, Recycle and best of all raise awareness and don’t litter.")
             print("Your small actions can make a huge difference, just remember we must change our habits before it is too late!")
             print()
+            print("Yay you beat the timer it only took you " + str(e-startime) + " secounds")
+        end = time.time()
+        if (end > startime + 15):
+            run = False 
+            print("\n\nOh no you went over the time limit :(\n")
     pygame.quit()
 if __name__ == "__main__":
     main()
